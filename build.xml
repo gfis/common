@@ -24,7 +24,7 @@
     <!-- the 5 needed for build-import.xml -->
     <property name="app.name"           value="Common" />
     <property name="app.version"        value="3" />
-    <property name="app.main-class"     value="org.teherba.common.URIReader" />
+    <property name="app.main-class"     value="org.teherba.common.RegressionTester" />
     <property name="tomcat.base"        value="/var/lib/tomcat" />
     <property name="tomcat.home"        value="/usr/share/tomcat" />
     <import file="build-import.xml" />
@@ -54,6 +54,15 @@
         </copy>
     -->
     </target>
+
+    <target name="clean" depends="empty">
+        <!-- do not delete anything in tomcat/openlib -->
+    </target>
+
+    <target name="deploy-jar" depends="dist">
+        <copy file="${dist.home}/common.jar" toDir="${tomcat.base}/openlib" verbose="true" />
+    </target>
+
 
     <target name="not_yet_generate">
     <!--

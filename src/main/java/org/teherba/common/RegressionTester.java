@@ -1,9 +1,11 @@
 /*  Reader for text file, returns a string without any whitespace
  *  @(#) $Id: 749d72563123a83ce64563e9259c2345ab169614 $
+ *  2016-08-10: check for non-empty result file with thisStream.size()
+ *  2016-07-11: make -s; implicit macro CASE
  *  2016-05-14: HTTPZ and CALLZ
  *  2016-05-10: optionally set Http request properties
  *  2016-04-22: MAKE command; log stderr
- *  2016-04-16: macro PWD = System.getProperty("user.dir")
+ *  2016-04-16: implicit macro PWD = System.getProperty("user.dir")
  *  2015-09-08: continue lines with "\\" at the end
  *  2015-03-26: cat after cp (if *.prev.tst did not exist)
  *  2014-11-10: SORT=; more Javadoc
@@ -93,6 +95,8 @@ Dbat Vx.hhhh/yyyy-mm-dd - DataBase Application Tool
  *  The following macro definitions are recognized:
  *  <table>
  *  <tr><td>ARGS=   </td><td>commandline arguments which are appended to the CALL command</td></tr>
+ *  <tr><td>CASE    </td><td>built-in macro which returns the name of the current testcase</td></tr>
+ *  <tr><td>DATA    </td><td>built-in macro which returns the name of the current data file</td></tr>
  *  <tr><td>MAKE=   </td><td>define the make command and its options (default: <em>make -f makefile</em></td></tr>
  *  <tr><td>PACKAGE=</td><td>define the class name prefix for all following CALL commands (default: <em>org.teherba</em>)</td></tr>
  *  <tr><td>REQUEST=</td><td>define a list of pairs <em>key:value</em> (separated by spaces) for Http request properties</td></tr>
@@ -363,7 +367,7 @@ public class RegressionTester {
         String argsPrefix       = ""; // default for ARGS macro
         String diffPrefix       = "diff -Z "; // -Z = ignore line ends
         String baseURL          = "http://localhost:8080/dbat/servlet"; // default for URL macro
-        String makePrefix       = "make -f makefile";
+        String makePrefix       = "make -s -f makefile";
         String sortPrefix       = "sort ";
         String xsltPrefix       = "xsltproc ";
         String cmd              = null; // system command to be executed
@@ -513,15 +517,16 @@ public class RegressionTester {
 
                         } else if (verb.equals("TEST")) {
                             if (thisStream != null) { // is still open - process results of previous TEST
+                                boolean passed = thisStream.size() > 0L; // must be non-empty
                                 thisStream.close();
                                 System.setOut(realStdOut);
                                 System.setErr(realStdErr);
-                                prevName = thisName.replaceAll("\\.this\\.", ".prev.")
-                                        .replaceAll(".bad", "")
-                                        ;
+                                prevName = thisName.replaceAll("\\.this\\.", ".prev.").replaceAll(".bad", "");
                                 prevFile = new File(prevName);
-                                boolean passed = true; // Think positive!
                                 if (! skipping) {
+                                    if (! passed) {
+                                        realStdOut.println("?? failed because of empty output");
+                                    }
                                     if (prevFile.exists()) { // run diff prev this
                                         cmd = diffPrefix + " -C0 " + prevName + " " + thisName; // -Z = ignore line ends
                                             // context diffs may be used only here, but not in our DIFF command
@@ -533,7 +538,7 @@ public class RegressionTester {
                                             iline ++;
                                         } // while readLine
                                         reader.close();
-                                        passed = iline == 0;
+                                        passed = passed && (iline == 0);
                                         if (passed) {
                                             passedCount ++;
                                         } else {
@@ -580,6 +585,7 @@ public class RegressionTester {
                                 System.setOut(thisStream);
                                 System.setErr(System.out);
                                 dataBuffer.setLength(0);
+                                macros.put("CASE", testName);
                             } // not END
                             // TEST
 
@@ -592,7 +598,7 @@ public class RegressionTester {
                                 String className = classPrefix + callMatcher.group(1);
                                 String argsStr   = argsPrefix  + callMatcher.group(2);
                                 String[] parts   = CommandTokenizer.split(argsStr);
-                                logText = "java -cp " + System.getProperty("java.class.path") 
+                                logText = "java -cp " + System.getProperty("java.class.path")
                                         + " " + className + " " + argsStr
                                         + (verb.endsWith("Z") ? " | unzip -p" : "");
                                 realStdOut.println(logText);

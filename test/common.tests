@@ -1,0 +1,61 @@
+#!java -Djdk.net.registerGopherProtocol=true -cp dist/dbat.jar org.teherba.common.RegressionTester
+
+# Collection of Testcases for Common
+# @(#) $Id: all.tca 955 2012-06-05 07:22:59Z gfis $
+# 2016-05-30, Dr. Georg Fischer
+#-----------------------------------
+# Caution:
+# (3) Test cases UR2 (gopher) and UR3 (ftp) access sites on the Internet; check all URLs in UR1-UR5.
+#======================================================================
+# normally the main method of class URIReader in the following package is CALLed
+PACKAGE=org.teherba.common
+
+ECHO 000
+#======================================================================
+# CALL the main methods of some other classes in org.teherba.common
+PACKAGE=org.teherba.common
+ARGS=
+
+TEST CT1 tokenizing preprogrammed commandline string
+CALL CommandTokenizer
+
+TEST CT2 tokenizing from file
+DATA #
+    call -in '2011-07-21 17:39:00'
+    call  my.pr1 -in "2 double quoted" -in:int 29647 -in '3 single quoted';
+CALL CommandTokenizer -f $(DATA)
+
+TEST CT3 tokenizing from file with SQL syntax
+DATA #
+    call -in '2011-07-21 17:39:00'
+    call  my.pr1 -in "2 double quoted" -in:int 29647 -in '3 single quoted';
+CALL CommandTokenizer -sql $(DATA)
+#-------------------------------
+# URIReader schema testing
+PACKAGE=org.teherba.common
+ARGS=
+TEST UR1 http schema
+CALL URIReader "http://localhost:8080/dbat/noversion.txt"
+
+# the following works with an Internet connection only
+# TEST UR2 gopher schema
+# CALL URIReader "gopher://gopher.rbfh.de/0/Fun/500miles.txt"
+
+# the following works with an Internet connection only
+# TEST UR3 ftp schema
+# CALL URIReader "ftp://ftp.gnu.org/README"
+
+TEST UR4 file schema
+CALL URIReader "file://$(PWD)/web/noversion.txt"
+# CALL URIReader "file:///c:\\users\gfis\work\gits\dbat/web/noversion.txt"
+
+TEST UR5 jar-file schema
+CALL URIReader "jar:file://$(PWD)/dist/dbat.jar!/META-INF/LICENSE"
+# CALL URIReader "jar:file:///c:\\users\gfis\work\gits\dbat\dist\dbat.jar!/META-INF/LICENSE"
+
+TEST UR6 relative file
+CALL URIReader "web/noversion.txt"
+
+TEST UR7 data URI
+CALL URIReader "data:this+is%20the+text+to+be+read" UTF-8
+#======================================================================

@@ -2,6 +2,7 @@
 <!--
     ant-buildfile for commandline, web application and web service
     @(#) $Id: 08b49ddc73ef271c7054bb70acb278bcff247562 $
+    2016-08-29: tomcat/openlib in clasppath for compile
     2016-04-16: MANIFEST.MF back in etc/META-INF, with CVS Id
     2015-02-02: copy to webapps replaced by copy to *.wr and rename to *.war
     2014-11-11: tomcat.base|home moved to build.xml; no catalina-task
@@ -75,6 +76,9 @@
             <include name="*.jar"/>
         </fileset>
         <fileset dir="${tomcat.home}/lib"><!-- contains the servlet-api jar -->
+            <include name="*.jar"/>
+        </fileset>
+        <fileset dir="${tomcat.base}/openlib"><!-- contains the shared JAR files -->
             <include name="*.jar"/>
         </fileset>
     </path>
