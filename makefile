@@ -20,11 +20,13 @@ all: regression
 #-------------------------------------------------------------------
 # Perform a regression test (a complete run > 250 testcases with TEST=% takes > 17 s)
 regression: 
-	java -classpath "dist/common.jar;c:/var/lib/tomcat/openlib/log4j-1.2.17.jar" \
+	java -Dlog4j.debug -classpath "dist/common.jar;c:/var/lib/tomcat/openlib/log4j-1.2.17.jar" \
 			org.teherba.common.RegressionTester $(TESTDIR)/common.tests $(TEST) 2>&1 \
 	| tee $(TESTDIR)/regression.log
 	grep FAILED $(TESTDIR)/regression.log
-#
+
+#	java -Dlog4j.debug 
+#----
 # Recreate all testcases which failed (i.e. remove xxx.prev.tst)
 # Handle with care!
 # Failing testcases are turned into "passed" and are manifested by this target!

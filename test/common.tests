@@ -2,6 +2,7 @@
 
 # Collection of Testcases for Common
 # @(#) $Id: all.tca 955 2012-06-05 07:22:59Z gfis $
+# 2016-08-29: adopted to 'common'
 # 2016-05-30, Dr. Georg Fischer
 #-----------------------------------
 # Caution:
@@ -35,7 +36,7 @@ CALL CommandTokenizer -sql $(DATA)
 PACKAGE=org.teherba.common
 ARGS=
 TEST UR1 http schema
-CALL URIReader "http://localhost:8080/dbat/noversion.txt"
+CALL URIReader "http://localhost:8080/common/index.html"
 
 # the following works with an Internet connection only
 # TEST UR2 gopher schema
@@ -46,15 +47,13 @@ CALL URIReader "http://localhost:8080/dbat/noversion.txt"
 # CALL URIReader "ftp://ftp.gnu.org/README"
 
 TEST UR4 file schema
-CALL URIReader "file://$(PWD)/web/noversion.txt"
-# CALL URIReader "file:///c:\\users\gfis\work\gits\dbat/web/noversion.txt"
+CALL URIReader "file://$(PWD)/web/index.html"
 
 TEST UR5 jar-file schema
-CALL URIReader "jar:file://$(PWD)/dist/dbat.jar!/META-INF/LICENSE"
-# CALL URIReader "jar:file:///c:\\users\gfis\work\gits\dbat\dist\dbat.jar!/META-INF/LICENSE"
+CALL URIReader "jar:file://$(PWD)/dist/common.jar!/META-INF/LICENSE"
 
 TEST UR6 relative file
-CALL URIReader "web/noversion.txt"
+CALL URIReader "web/index.html"
 
 TEST UR7 data URI
 CALL URIReader "data:this+is%20the+text+to+be+read" UTF-8
