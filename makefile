@@ -2,7 +2,7 @@
 
 # Test Common functions and other utility targets
 # @(#) $Id: 2bbd9511422674a354fe5a19f2d55437adbebce0 $
-# 2016-08-29: Georg Fischer: copied fro Dbat
+# 2016-08-29: Georg Fischer: copied from Dbat
 
 DIFF=diff -y --suppress-common-lines --width=160
 DIFF=diff -w -rs -C0
@@ -20,8 +20,8 @@ all: regression
 #-------------------------------------------------------------------
 # Perform a regression test (a complete run > 250 testcases with TEST=% takes > 17 s)
 regression: 
-	java -Dlog4j.debug -classpath "dist/common.jar;c:/var/lib/tomcat/openlib/log4j-1.2.17.jar" \
-			org.teherba.common.RegressionTester $(TESTDIR)/common.tests $(TEST) 2>&1 \
+	java -classpath "dist/common.jar" \
+			org.teherba.common.RegressionTester $(TESTDIR)/all.tests $(TEST) 2>&1 \
 	| tee $(TESTDIR)/regression.log
 	grep FAILED $(TESTDIR)/regression.log
 
@@ -38,10 +38,10 @@ recr1:
 regr2:
 	make regression TEST=$(TEST) > x.tmp
 #--------------------------------------------------
-# test whether all defined tests in common.tests have *.prev.tst results and vice versa
+# test whether all defined tests in all.tests have *.prev.tst results and vice versa
 check_tests:
-	grep -E "^TEST" $(TESTDIR)/common.tests | cut -b 6-8 | sort | uniq -c > $(TESTDIR)/tests_formal.tmp
-	ls -1 $(TESTDIR)/*.prev.tst            | cut -b 6-8 | sort | uniq -c > $(TESTDIR)/tests_actual.tmp
+	grep -E "^TEST" $(TESTDIR)/all.tests | cut -b 6-8 | sort | uniq -c > $(TESTDIR)/tests_formal.tmp
+	ls -1 $(TESTDIR)/*.prev.tst          | cut -b 6-8 | sort | uniq -c > $(TESTDIR)/tests_actual.tmp
 	diff -y --suppress-common-lines --width=32 $(TESTDIR)/tests_formal.tmp $(TESTDIR)/tests_actual.tmp
 #---------------------------------------------------
 jfind:

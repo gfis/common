@@ -2,6 +2,7 @@
 <!--
     ant-buildfile for commandline and web application
     @(#) $Id: bfb160b42e4807f6c45c2e455d983904452f16ff $
+    2016-09-03: target core.jar
     2016-05-30, Gerog Fischer: copied from Dbat
 -->
 <!--
@@ -32,37 +33,64 @@
     <property name="test"               value="%" />
 
     <target name="generate">
-    <!--
-        <copy todir="${src.home}/org/teherba/xtrans">
-            <fileset dir="../xtrans/src/main/java/org/teherba/xtrans">
-                <include name="BaseTransformer.java"/>
-                <include name="BaseRecord.java"/>
-                <include name="BasicFactory.java"/>
-                <include name="ByteRecord.java"/>
-                <include name="CharRecord.java"/>
-                <include name="CharTransformer.java"/>
-                <include name="Field.java"/>
-                <include name="pseudo/LevelFilter.java"/>
-                <include name="XMLTransformer.java"/>
-                <include name="XtransFactory.java"/>
-            </fileset>
-        </copy>
-        <copy todir="${src.home}/org/teherba/xtrans/general">
-            <fileset dir="../xtrans/src/main/java/org/teherba/xtrans/general">
-                <include name="PYXTransformer.java"/>
-            </fileset>
-        </copy>
-    -->
     </target>
 
-    <target name="clean" depends="empty">
-        <!-- do not delete anything in tomcat/openlib -->
+    <target name="core.jar">
+        <!-- without libraries, without private files 
+        -->
+        <jar jarfile="${dist.home}/${ant.project.name}-core.jar"
+                basedir="${build.classes}"
+                manifest="${build.classes}/META-INF/MANIFEST.MF"
+                excludes="web/** **/priv/*.class"
+                >
+        </jar>
     </target>
 
-    <target name="deploy-jar" depends="dist">
-        <copy file="${dist.home}/common.jar" toDir="${tomcat.base}/openlib" verbose="true" />
+    <macrodef name="rm-from-all">
+       <attribute name="file" />
+       <sequential>
+          <delete file="../basdetok/@{file}" />
+          <delete file="../checkdig/@{file}" />
+          <delete file="../churchcal/@{file}" />
+          <delete file="../dbat/@{file}" />
+          <delete file="../flodskim/@{file}" />
+          <delete file="../gramword/@{file}" />
+          <delete file="../jextra/@{file}" />
+          <delete file="../numword/@{file}" />
+          <delete file="../ramath/@{file}" />
+          <delete file="../xtool/@{file}" />
+          <delete file="../xtrans/@{file}" />
+       </sequential>
+    </macrodef>
+
+    <macrodef name="cp-to-all">
+       <attribute name="source" />
+       <attribute name="target.dir" />
+       <sequential>
+          <copy file="@{source}" toDir="../basdetok/@{target.dir}" />
+          <copy file="@{source}" toDir="../checkdig/@{target.dir}" />
+          <copy file="@{source}" toDir="../churchcal/@{target.dir}" />
+          <copy file="@{source}" toDir="../dbat/@{target.dir}" />
+          <copy file="@{source}" toDir="../flodskim/@{target.dir}" />
+          <copy file="@{source}" toDir="../gramword/@{target.dir}" />
+          <copy file="@{source}" toDir="../jextra/@{target.dir}" />
+          <copy file="@{source}" toDir="../numword/@{target.dir}" />
+          <copy file="@{source}" toDir="../ramath/@{target.dir}" />
+          <copy file="@{source}" toDir="../xtool/@{target.dir}" />
+          <copy file="@{source}" toDir="../xtrans/@{target.dir}" />
+       </sequential>
+    </macrodef>
+
+    <target name="build-import">
+        <cp-to-all source="build-import.xml" target.dir="." />
     </target>
 
+    <target name="repl-common">
+        <rm-from-all   file="lib/common.jar" />
+        <cp-to-all   source="dist/common-core.jar" target.dir="lib" />
+        <delete file="/var/lib/tomcat/openlib/common.jar" />
+        <copy file="dist/common-core.jar" toDir="/var/lib/tomcat/openlib" />
+    </target>
 
     <target name="not_yet_generate">
     <!--

@@ -16,6 +16,8 @@ ECHO 000
 # CALL the main methods of some other classes in org.teherba.common
 PACKAGE=org.teherba.common
 ARGS=
+URL=http://localhost:8080/common/servlet
+#-------------------------------
 
 TEST CT1 tokenizing preprogrammed commandline string
 CALL CommandTokenizer
@@ -57,4 +59,8 @@ CALL URIReader "web/index.html"
 
 TEST UR7 data URI
 CALL URIReader "data:this+is%20the+text+to+be+read" UTF-8
-#======================================================================
+#-------------------------------
+# Web interface
+TEST W01 get license
+HTTP view=license
+#-------------------------------

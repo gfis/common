@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+    @(#) $Id: 8ed14768ce231f5de10ed36d28d7ef63e59be418 $
+    2016-09-03: common.priv.CommonServlet
+    2016-05-30, Georg Fischer: copied from Dbat
+-->
 <web-app version="2.5" 
         xmlns="http://java.sun.com/xml/ns/javaee" 
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-<!--
-    @(#) $Id: 8ed14768ce231f5de10ed36d28d7ef63e59be418 $
-    2016-05-30, Georg Fischer: copied from Dbat
--->
 <!--
  * Copyright 2016 Dr. Georg Fischer <punctum at punctum dot kom>
  *
@@ -35,7 +36,7 @@
     <!-- Servlets and their mappings to URLs-->
     <servlet> 
         <servlet-name>CommonServlet</servlet-name>
-        <servlet-class>org.teherba.common.CommonServlet</servlet-class>
+        <servlet-class>org.teherba.common.priv.CommonServlet</servlet-class>
     </servlet>
 
     <servlet-mapping> 
