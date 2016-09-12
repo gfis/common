@@ -19,11 +19,14 @@
  */
 package org.teherba.common.priv;
 import  org.teherba.common.web.BasePage;
+import  java.io.File;
 import  java.io.PrintWriter;
 import  java.io.Serializable;
 import  java.util.Iterator;
 import  javax.servlet.http.HttpServletRequest;
 import  javax.servlet.http.HttpServletResponse;
+import  org.apache.commons.fileupload.disk.DiskFileItem;
+import  org.apache.commons.fileupload.FileItem;
 import  org.apache.log4j.Logger;
 
 /** Common main dialog page
@@ -39,7 +42,7 @@ public class IndexPage implements Serializable {
     /** No-args Constructor
      */
     public IndexPage() {
-        log      = Logger.getLogger(IndexPage.class.getName());
+        log = Logger.getLogger(IndexPage.class.getName());
     } // Constructor
 
     /** Output the main dialog page for RaMath
@@ -58,7 +61,35 @@ public class IndexPage implements Serializable {
             out.write("</head>\n<body>\n");
 
             out.write("<h2>Common</h2>\n");
-            out.write("<p>This project collects a series of classes and methods which are useful in several subprojects.</p>\n");
+            out.write("<p>This project collects a series of classes and "
+                    + "methods which are useful in several subprojects.</p>\n");
+            out.write("<h3>Parameter Test</h3>\n");
+            out.write("<form action=\"servlet\" method=\"post\" enctype=\"multipart/form-data\">\n");
+            // first 2 text fields
+            out.write("param1:  <input name=\"param1\" type=\"text\" size=\"10\" value=\"" 
+                    + basePage.getFormField("param1") + "\" /><br />\n");
+            out.write("param2:  <input name=\"param2\" type=\"text\" size=\"10\" value=\"" 
+                    + basePage.getFormField("param2") + "\" /><br />\n");
+            // then 2 files
+            int ifile = 0;
+            FileItem fitem1 = basePage.getFormFile(ifile ++);
+            FileItem fitem2 = basePage.getFormFile(ifile ++);
+            if (fitem1 != null) {
+                File location = ((DiskFileItem) fitem1).getStoreLocation();
+                out.write("<!-- fitem1 is located in " + location.getAbsolutePath() + " -->\n");
+            }
+            out.write("file1:  <input name=\"file1\"  type=\"file\" size=\"10\" value=\"" 
+            		+ fitem1.getName()
+                    + "\" style=\"font-family: Courier, monospace\"/><br />\n");
+            out.write("file2:  <input name=\"file2\"  type=\"file\" size=\"10\" value=\"" 
+            		+ fitem2.getName()
+                    + "\" style=\"font-family: Courier, monospace\"/><br />\n");
+            out.write("  <input type=\"submit\" value=\"Submit\"><br />\n");
+            out.write("</form>\n");
+            out.write("<h4>Content of file1</h4>\n<pre>");
+            out.write(fitem1.getString() + "\n</pre>\n");
+            out.write("<h4>Content of file2</h4>\n<pre>");
+            out.write(fitem2.getString() + "\n</pre>\n");
             basePage.writeAuxiliaryLinks(language, "main");
             basePage.writeTrailer(language, "quest");
         } catch (Exception exc) {

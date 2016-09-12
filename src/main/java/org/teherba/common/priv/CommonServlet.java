@@ -84,7 +84,11 @@ public class CommonServlet extends HttpServlet {
      *  @param response response with writer
      */
     public void generateResponse(HttpServletRequest request, HttpServletResponse response) {
-        String view     = BasePage.getInputField(request, "view"  , "");
+        String view = basePage.getFilesAndFields(request, new String[] 
+                { "view",   "index"
+                , "param1", "value1"
+                , "param2", "value2"
+                } );
         String language = "en";
         int index = 0;
         boolean found = false;

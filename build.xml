@@ -2,6 +2,7 @@
 <!--
     ant-buildfile for commandline and web application
     @(#) $Id: bfb160b42e4807f6c45c2e455d983904452f16ff $
+    2016-09-11: fill.lib
     2016-09-03: target core.jar
     2016-05-30, Gerog Fischer: copied from Dbat
 -->
@@ -46,6 +47,16 @@
         </jar>
     </target>
 
+    <target name="fill.lib">
+        <copy todir="${lib.home}">
+            <fileset dir="${tomcat.base}/openlib">
+                <include name="commons-fileupload-1.2.2.jar" />
+                <include name="commons-io-2.1.jar" />
+                <include name="log4j-1.2.17.jar" />
+            </fileset>
+        </copy>
+    </target>
+
     <macrodef name="rm-from-all">
        <attribute name="file" />
        <sequential>
@@ -88,8 +99,10 @@
     <target name="repl-common">
         <rm-from-all   file="lib/common.jar" />
         <cp-to-all   source="dist/common-core.jar" target.dir="lib" />
+        <cp-to-all   source="lib/log4j-1.2.17.jar"       target.dir="lib" />
         <delete file="/var/lib/tomcat/openlib/common.jar" />
         <copy file="dist/common-core.jar" toDir="/var/lib/tomcat/openlib" />
+        <copy file="lib/log4j-1.2.17.jar" toDir="/var/lib/tomcat/openlib" />
     </target>
 
     <target name="not_yet_generate">
