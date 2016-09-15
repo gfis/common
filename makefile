@@ -48,3 +48,10 @@ jfind:
 	find src -iname "*.java" | xargs -l grep -H $(JF)
 rmbak:
 	find src -iname "*.bak"  | xargs -l rm -v
+#---------------------------------------------------
+multi0:
+	java -cp dist/common.jar org.teherba.common.priv.URIMultiPart | tee multi0.tmp
+	diff -C0 multi0.tmp ../gramword/test/sample.multipart.request.txt
+multi1:
+	java -cp dist/common.jar org.teherba.common.priv.URIMultiPart ../gramword/test/wachstube.txt \
+			http://localhost:8080/gramword/servlet

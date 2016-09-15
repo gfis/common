@@ -99,8 +99,9 @@
         <mkdir dir="${dist.home}"/>
         <mkdir dir="${lib.home}"/>
 
-        <delete dir="${build.home}" failonerror="false" quiet="true"/>
-        <delete dir="${docs.home}"  failonerror="false" quiet="true"/>
+        <delete dir="${build.home}"   failonerror="false" quiet="true"/>
+        <delete dir="${build.expand}" failonerror="false" quiet="true"/>
+        <delete dir="${docs.home}"    failonerror="false" quiet="true"/>
         <delete failonerror="false" quiet="true">
             <fileset dir="${basedir}">
                 <include name="**/*.bak"/>

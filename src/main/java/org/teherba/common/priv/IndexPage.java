@@ -65,31 +65,53 @@ public class IndexPage implements Serializable {
                     + "methods which are useful in several subprojects.</p>\n");
             out.write("<h3>Parameter Test</h3>\n");
             out.write("<form action=\"servlet\" method=\"post\" enctype=\"multipart/form-data\">\n");
-            // first 2 text fields
-            out.write("param1:  <input name=\"param1\" type=\"text\" size=\"10\" value=\"" 
-                    + basePage.getFormField("param1") + "\" /><br />\n");
-            out.write("param2:  <input name=\"param2\" type=\"text\" size=\"10\" value=\"" 
-                    + basePage.getFormField("param2") + "\" /><br />\n");
-            // then 2 files
-            int ifile = 0;
-            FileItem fitem1 = basePage.getFormFile(ifile ++);
-            FileItem fitem2 = basePage.getFormFile(ifile ++);
-            if (fitem1 != null) {
-                File location = ((DiskFileItem) fitem1).getStoreLocation();
-                out.write("<!-- fitem1 is located in " + location.getAbsolutePath() + " -->\n");
-            }
-            out.write("file1:  <input name=\"file1\"  type=\"file\" size=\"10\" value=\"" 
-            		+ fitem1.getName()
-                    + "\" style=\"font-family: Courier, monospace\"/><br />\n");
-            out.write("file2:  <input name=\"file2\"  type=\"file\" size=\"10\" value=\"" 
-            		+ fitem2.getName()
-                    + "\" style=\"font-family: Courier, monospace\"/><br />\n");
+            out.write("<input name=\"view\" type=\"hidden\" value=\"index\" />\n");
+
+            // first all normal fields
+            out.write("<h4>Form Fields</h4>\n");
+            String key = null;
+            int ifld = 0;
+            Iterator<String> fiter = basePage.getFormIterator();
+            while (fiter.hasNext()) {
+                key   = fiter.next();
+                out.write("[field" + String.valueOf(ifld) + "] " + key
+                        + ":  <input name=\"" + key + "\" type=\"text\" size=\"16\" value=\""
+                        + basePage.getFormField(key) + "\" /><br />\n");
+                ifld ++;
+            } // while fiter
+
+            // then the uploaded files
+            out.write("<h4>Form Files</h4>\n");
+            int fileCount = basePage.getFormFileCount();
+            int
+            ifile = 0;
+            while (ifile < 2) {
+                if (ifile < fileCount) {
+                    FileItem fitem = basePage.getFormFile(ifile);
+                    File location = ((DiskFileItem) fitem).getStoreLocation();
+                    // out.write("<!-- fitem is located in " + location.getAbsolutePath() + " -->\n");
+                    key = fitem.getName();
+                } else {
+                    key = "file" + String.valueOf(ifile);
+                }
+                out.write("[file" + String.valueOf(ifile) + "]<em> " + key
+                         + "</em>:  <input name=\"" + key + "\" type=\"file\" size=\"16\""
+                         + "\" style=\"font-family: Courier, monospace\"/><br />\n");
+                ifile ++;
+            } // while ifile
+
             out.write("  <input type=\"submit\" value=\"Submit\"><br />\n");
             out.write("</form>\n");
-            out.write("<h4>Content of file1</h4>\n<pre>");
-            out.write(fitem1.getString() + "\n</pre>\n");
-            out.write("<h4>Content of file2</h4>\n<pre>");
-            out.write(fitem2.getString() + "\n</pre>\n");
+
+            ifile = 0;
+            while (ifile < fileCount) {
+                FileItem fitem = basePage.getFormFile(ifile);
+                key = fitem.getName();
+                out.write("<h4>Content of File " + String.valueOf(ifile) + ":<em>" + key +"</em></h4>\n");
+                out.write(fitem.getString() + "\n</pre>\n");
+                ifile ++;
+            } // while ifile
+
             basePage.writeAuxiliaryLinks(language, "main");
             basePage.writeTrailer(language, "quest");
         } catch (Exception exc) {

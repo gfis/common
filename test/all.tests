@@ -64,3 +64,15 @@ CALL URIReader "data:this+is%20the+text+to+be+read" UTF-8
 TEST W01 get license
 HTTP view=license
 #-------------------------------
+# mulitpart/form-data test program
+PACKAGE=org.teherba.common.priv
+
+TEST MP01 show request body
+CALL URIMultiPart
+DIFF -C0 MP01.this.tst ../gramword/test/sample.multipart.request.txt
+
+TEST MP02 specific multipart/form-data request
+CALL URIMultiPart ../gramword/test/wachstube.txt http://localhost:8080/gramword/servlet
+
+TEST MP03 general  multipart/form-data request
+CALL URIMultiPart ../gramword/test/wachstube.txt "http://localhost:8080/common/servlet?view=index"

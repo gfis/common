@@ -1,5 +1,6 @@
 /*  BasePage.java - common code for web pages
  *  @(#) $Id: 15f8c8a4b783c12348d7f010594f218e227756d9 $
+ *  2016-09-15: getFormFieldCount, getFormIterator
  *  2016-09-12: saveViewParameters
  *  2016-09-02: auxiliary links on same line when ending with space
  *  2016-08-29: writeAuxiliaryLinks
@@ -64,7 +65,7 @@ public class BasePage {
     /** Stores the message patterns */
     private   HashMap<String, String> textMap;
     /** Stores the view parameters */
-    private   HashMap<String, String> viewMap;
+    private   HashMap<String, String> formMap;
     /** Stores the file items of an Http multipart request */
     private   FileItem[] fileItems;
     /** separator for message (textMap) keys */
@@ -83,7 +84,7 @@ public class BasePage {
         log       = Logger.getLogger(BasePage.class.getName());
         out       = null;
         textMap   = new HashMap<String, String>(8);
-        viewMap   = new HashMap<String, String>(8);
+        formMap   = new HashMap<String, String>(8);
         fileItems = new FileItem[] {};
         appName   = applicationName;
         BasePage basePage = this; // convenient for copy/paste
@@ -160,23 +161,23 @@ public class BasePage {
         return result;
     } // getInputField(,,int)
 
-    /** Saves the request parameters in the internal map {@link #viewMap}.
+    /** Saves the request parameters in the internal map {@link #formMap}.
      *  The values are taken from Http GET/POST request fields,
      *  or from the {@link FileItem}s of a multipart request.
-     *  As side effects, the String fields are stored in {@link #viewMap}, and
+     *  As side effects, the String fields are stored in {@link #formMap}, and
      *  the file items are stored in {@link #fileItems}.
      *  @param request request with header fields
      *  @param pairs pairs of Strings for expected request parameter fields: (field name, default value)
      *  @return the value of any "view" field, or <em>null</em> if there is none
      */
     public String getFilesAndFields(HttpServletRequest request, String[] pairs) {
-        viewMap = new HashMap<String, String>(8);
+        formMap = new HashMap<String, String>(8);
         ArrayList<FileItem> fitemArray = new ArrayList<FileItem>(4);
         int ipair = 0;
         String name  = null;
         String value = null;
         while (ipair < pairs.length) {
-            viewMap.put(pairs[ipair], pairs[ipair + 1]);
+            formMap.put(pairs[ipair], pairs[ipair + 1]);
             ipair += 2;
         } // while ipair
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
@@ -189,12 +190,12 @@ public class BasePage {
                 if (formValue != null) { // replace default
                     value = formValue;
                 }
-                viewMap.put(name, value);
+                formMap.put(name, value);
             } // while ipair
         } else { // multipart
             ipair = 0;
             while (ipair < pairs.length) { // save all default values
-                viewMap.put(pairs[ipair], pairs[ipair + 1]);
+                formMap.put(pairs[ipair], pairs[ipair + 1]);
                 ipair += 2;
             } // while ipair
             try {
@@ -208,15 +209,15 @@ public class BasePage {
                     if (fitem.isFormField()) {
                         name  = fitem.getFieldName();
                         value = fitem.getString();
-                        String viewDefault = viewMap.get(name);
+                        String viewDefault = formMap.get(name);
                         if (viewDefault == null) { // this name is not an expected form field name
                             busy = false;
-                            viewMap.put("view",   "error");
-                            viewMap.put("messno", "405");
-                            viewMap.put("parm",   name);
-                            viewMap.put("par2",   value);
+                            formMap.put("view",   "error");
+                            formMap.put("messno", "405");
+                            formMap.put("parm",   name);
+                            formMap.put("par2",   value);
                         } else { // expected field
-                            viewMap.put(name, value);
+                            formMap.put(name, value);
                         }
                     } else { // no formField - uploaded fileItem
                         fitemArray.add(fitem);
@@ -228,35 +229,8 @@ public class BasePage {
             }
         } // multipart
         fileItems = fitemArray.toArray(new FileItem[] {});
-        return viewMap.get("view");
+        return formMap.get("view");
     } // getFilesAndFields
-
-    /** Saves the request parameters in the internal map {@link #viewMap} (convenience method).
-     *  The values are taken from Http GET/POST request fields,
-     *  or from the {@link FileItem}s of a multipart request.
-     *  Any file contents are converted to String values of fields <em>file1, file2 ...</em>.
-     *  As a side effect, the String fields are stored in {@link #viewMap}.
-     *  @param request request with header fields
-     *  @param defaultView the default for the <em>view</em> parameter
-     *  @param pairs pairs of Strings for expected request parameter fields: (field name, default value)
-     *  @return the (new) value of the <em>view</em> parameter
-     */
-/*
-    public String getAllFormFields(HttpServletRequest request, String defaultView, String[] pairs) {
-        FileItem[] fitems = getFilesAndFields(request, pairs);
-        if (viewMap.get("view") == null) {
-            viewMap.put("view", defaultView);
-        }
-        int ifile = 0;
-        while (ifile < fitems.length) { // convert any file contents to String
-            String value = fitems[ifile].getString();
-            ifile ++;
-            String name = "file" + String.valueOf(ifile); // start with "file1"
-            viewMap.put(name, value);
-        } // while ifile
-        return viewMap.get("view");
-    } // getViewFields
-*/
 
     /** Gets the String value of a form field obtained by a previous call of 
      *  {@link #getFilesAndFields}.
@@ -264,7 +238,7 @@ public class BasePage {
      *  @return String value of the field
      */
     public String getFormField(String name) {
-        return viewMap.get(name);
+        return formMap.get(name);
     } // getFormField
 
     /** Gets a {@link FileItem} obtained by a previous call of 
@@ -275,6 +249,22 @@ public class BasePage {
     public FileItem getFormFile(int fileNo) {
     	return fileNo >= 0 && fileNo < fileItems.length ? fileItems[fileNo] : null;
     } // getFormFile
+
+    /** Gets the number of files obtained by a previous call of 
+     *  {@link #getFilesAndFields}.
+     *  @return the number of {@link FileItem}s, maybe 0
+     */
+    public int getFormFileCount() {
+    	return fileItems.length;
+    } // getFormFileCount
+
+    /** Gets an Iterator over the names of the form's fields obtained by a previous call of 
+     *  {@link #getFilesAndFields}.
+     *  @return an Iterator over {@link formMap}
+     */
+    public Iterator<String> getFormIterator() {
+    	return formMap.keySet().iterator();
+    } // getFormIterator
 
     /** Prints the start of the HTML page
      *  (XML declaration and beginning of <em>head</em> element,

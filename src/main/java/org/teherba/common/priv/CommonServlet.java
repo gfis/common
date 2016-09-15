@@ -90,8 +90,6 @@ public class CommonServlet extends HttpServlet {
                 , "param2", "value2"
                 } );
         String language = "en";
-        int index = 0;
-        boolean found = false;
         try {
             if (false) {
             } else if (view.equals("index")) {
@@ -104,7 +102,8 @@ public class CommonServlet extends HttpServlet {
                 (new MetaInfPage    ()).showMetaInf (request, response, basePage, language, view, this);
 
             } else {
-                basePage.writeMessage(request, response, language, new String[] { "401", "view", view });
+                (new IndexPage    ()).dialog(request, response, basePage, language);
+            //  basePage.writeMessage(request, response, language, new String[] { "401", "view", view });
             }
         } catch (Exception exc) {
             log.error(exc.getMessage(), exc);
