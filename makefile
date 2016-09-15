@@ -18,9 +18,9 @@ SUDO=
 
 all: regression
 #-------------------------------------------------------------------
-# Perform a regression test (a complete run > 250 testcases with TEST=% takes > 17 s)
+# Perform a regression test
 regression: 
-	java -classpath "dist/common.jar" \
+	java -Djdk.net.registerGopherProtocol=true -classpath "dist/common.jar" \
 			org.teherba.common.RegressionTester $(TESTDIR)/all.tests $(TEST) 2>&1 \
 	| tee $(TESTDIR)/regression.log
 	grep FAILED $(TESTDIR)/regression.log

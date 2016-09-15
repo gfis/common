@@ -46,6 +46,7 @@ import  java.net.HttpURLConnection;
 import  java.nio.channels.Channels;
 import  java.nio.channels.ReadableByteChannel;
 import  java.nio.file.Files;
+import  java.util.Arrays;
 import  java.util.Date;
 import  java.util.Iterator;
 import  java.util.Map;
@@ -59,7 +60,6 @@ import  org.apache.log4j.Logger;
  *      <ul>
  *      <li>file: - local file access</li>
  *      <li>ftp: - File transfer protocol</li>
- *      <li>gopher: - predecessor of http (only with system property -Djdk.net.registerGopherProtocol=true)</li>
  *      <li>http: - Hypertext transfer protocol</li>
  *      <li>https: - secure Hypertext transfer protocol</li>
  *      <li>jar: - access to files in a zipped Java archive</li>
@@ -79,17 +79,10 @@ import  org.apache.log4j.Logger;
  *  <code>BufferedReader</code> and <code>InputStream</code> are both implemented,
  *  but care must be taken to call the appropriate overloaded method name.
  *  <p>
- *  Caution, the gopher protocol is disabled by default in OpenJDK 6.
- *  From http://ads.freecode.com/articles/red-hat-security-update-for-openjdk-6:
- *  This update disables Gopher protocol support in the java.net package by
- *  default. Gopher support can be enabled by setting the newly introduced
- *  property, "jdk.net.registerGopherProtocol", to true. (CVE-2012-5085)
-
  *  @author Dr. Georg Fischer
  */
 public class URIReader {
     public final static String CVSID = "@(#) $Id: 662096ff3e2d74af4f150ad456ad013960a4ae70 $";
-
     /** log4j logger (category) */
     private Logger log;
 
@@ -218,7 +211,8 @@ public class URIReader {
      *  and an array of String arguments for request parameters.
      *  @param parmURI the Uniform Resource Identifier to be used: URL or <em>data:</em> URI
      *  @param enc character set to be used to read from bytes (character oriented),
-     *  or <code>null</code> (byte oriented).
+     *  or <em>null</em>
+     *  or <code>binary</code>, <code>byte</code>  (byte oriented).
      *  A pseudo encoding of "zip" pipes the binary input through an unzip operation.
      *  @param propMap optional map for request properties,
      *  or null if no properties should be associated
@@ -228,6 +222,9 @@ public class URIReader {
     public URIReader(String parmURI, String enc, Map<String,String> propMap, String[] args) {
         isOpened = true;
         log = Logger.getLogger(URIReader.class.getName());
+        if (enc != null && (enc.equals("binary") || enc.equals("byte"))) {
+            enc = null;
+        }
         this.encoding = enc;
         doUnzip = false;
         isEncoded = enc != null;
@@ -298,7 +295,7 @@ public class URIReader {
                 if (multipart) { // POST request -body for multipart/form-data
                     writeMultiPartFormData(gurlCon, args);
                     // multipart
-                } else { 
+                } else {
                     // no multipart - GET
                 }
 
@@ -408,7 +405,7 @@ public class URIReader {
                     if (mimeType == null) {
                         mimeType = URLConnection.guessContentTypeFromName(localFileName);
                     }
-                    
+
                     writer.append(mmBoundaryCRLF);
                     writer.append("Content-Disposition: form-data; name=\""
                             + fileFieldName + "\"; filename=\"" + fileName + "\"" + CRLF);
@@ -743,13 +740,16 @@ public class URIReader {
     //======================
 
     /** Test method: read from an URI.
-     *  @param args command line arguments: options, strings, table- or filenames
+     *  @param args command line arguments
      *  <pre>
-     *  java -cp dist/dbat.jar org.teherba.dbat.common.URIReader [uri]
+     *  java -cp dist/common.jar org.teherba.common.URIReader [uri [enc [args]]]
      *  </pre>
      *  Without any argument, the program tries a set of URI schemas/protocols, and
      *  shows whether the JVM has a handler for them.
      *  With an URI argument, the program reads from the URI and prints the content to STDOUT.
+     *  An optional 2nd argument defines the encoding of that content.
+     *  If there are 3 or more arguments, a multipart/form-data body is built
+     *  from the arguments starting with the 3rd, and that body is POSTed to the url in the first argument.
      */
     public static void main(String[] args) {
         System.setProperty("jdk.net.registerGopherProtocol", "true"); // does not work, not soon enough?
@@ -787,7 +787,12 @@ public class URIReader {
                 if (iarg < args.length) {
                     enc = args[iarg ++];
                 }
-                URIReader ureader = new URIReader(uri, enc);
+                URIReader ureader = null;
+                if (iarg < args.length) { // 3 or more
+                    ureader = new URIReader(uri, enc, null, Arrays.copyOfRange(args, 3, args.length));
+                } else { // 1, 2
+                    ureader = new URIReader(uri, enc);
+                }
                 if (ureader.isBinary()) { // binary
                     byte[] bbuf = new byte[4096];
                     int len = bbuf.length;

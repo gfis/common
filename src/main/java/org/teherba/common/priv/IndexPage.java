@@ -64,7 +64,7 @@ public class IndexPage implements Serializable {
             out.write("<p>This project collects a series of classes and "
                     + "methods which are useful in several subprojects.</p>\n");
             out.write("<h3>Parameter Test</h3>\n");
-            out.write("<form action=\"servlet\" method=\"post\" enctype=\"multipart/form-data\">\n");
+            out.write("<form action=\"servlet\" method=\"POST\" enctype=\"multipart/form-data\">\n");
             out.write("<input name=\"view\" type=\"hidden\" value=\"index\" />\n");
 
             // first all normal fields

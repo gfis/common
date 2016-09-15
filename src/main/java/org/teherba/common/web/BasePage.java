@@ -25,7 +25,7 @@ package org.teherba.common.web;
 import  java.io.PrintWriter;
 import  java.util.Arrays;
 import  java.util.ArrayList;
-import  java.util.HashMap;
+import  java.util.TreeMap;
 import  java.util.Iterator;
 import  java.util.List;
 import  java.util.regex.Pattern;
@@ -63,9 +63,9 @@ public class BasePage {
     /** (short) application name, for example "Dbat" */
     public    String appName;
     /** Stores the message patterns */
-    private   HashMap<String, String> textMap;
+    private   TreeMap<String, String> textMap;
     /** Stores the view parameters */
-    private   HashMap<String, String> formMap;
+    private   TreeMap<String, String> formMap;
     /** Stores the file items of an Http multipart request */
     private   FileItem[] fileItems;
     /** separator for message (textMap) keys */
@@ -83,8 +83,8 @@ public class BasePage {
     public BasePage(String applicationName) {
         log       = Logger.getLogger(BasePage.class.getName());
         out       = null;
-        textMap   = new HashMap<String, String>(8);
-        formMap   = new HashMap<String, String>(8);
+        textMap   = new TreeMap<String, String>();
+        formMap   = new TreeMap<String, String>();
         fileItems = new FileItem[] {};
         appName   = applicationName;
         BasePage basePage = this; // convenient for copy/paste
@@ -171,7 +171,7 @@ public class BasePage {
      *  @return the value of any "view" field, or <em>null</em> if there is none
      */
     public String getFilesAndFields(HttpServletRequest request, String[] pairs) {
-        formMap = new HashMap<String, String>(8);
+        formMap = new TreeMap<String, String>();
         ArrayList<FileItem> fitemArray = new ArrayList<FileItem>(4);
         int ipair = 0;
         String name  = null;
@@ -210,7 +210,7 @@ public class BasePage {
                         name  = fitem.getFieldName();
                         value = fitem.getString();
                         String viewDefault = formMap.get(name);
-                        if (viewDefault == null) { // this name is not an expected form field name
+                        if (false && viewDefault == null) { // this name is not an expected form field name
                             busy = false;
                             formMap.put("view",   "error");
                             formMap.put("messno", "405");

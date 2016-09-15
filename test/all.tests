@@ -36,17 +36,22 @@ CALL CommandTokenizer -sql $(DATA)
 #-------------------------------
 # URIReader schema testing
 PACKAGE=org.teherba.common
-ARGS=
+JVM=-Djdk.net.registerGopherProtocol=true
+
+TEST UR0 show known protocols
+CALL URIReader
+
 TEST UR1 http schema
 CALL URIReader "http://localhost:8080/common/index.html"
 
 # the following works with an Internet connection only
+# gopher is normally disabled in the JVM, maybe -Djdk.net.registerGopherProtocol=true could enable it 
 # TEST UR2 gopher schema
 # CALL URIReader "gopher://gopher.rbfh.de/0/Fun/500miles.txt"
 
-# the following works with an Internet connection only
-# TEST UR3 ftp schema
-# CALL URIReader "ftp://ftp.gnu.org/README"
+the following works with an Internet connection only
+TEST UR3 ftp schema
+CALL URIReader "ftp://ftp.gnu.org/README"
 
 TEST UR4 file schema
 CALL URIReader "file://$(PWD)/web/index.html"
@@ -59,6 +64,10 @@ CALL URIReader "web/index.html"
 
 TEST UR7 data URI
 CALL URIReader "data:this+is%20the+text+to+be+read" UTF-8
+
+TEST UR8 servlet with normal form fields
+CALL URIReader "http://localhost:8080/common/servlet UTF-8 view=index parm1=Georg parm2=2906 -F file1=@test/regression.properties;type=text/plain
+
 #-------------------------------
 # Web interface
 TEST W01 get license
