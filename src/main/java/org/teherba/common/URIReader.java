@@ -203,7 +203,7 @@ public class URIReader {
      *  or null if no properties should be associated
      */
     public URIReader(String parmURI, String enc, Map<String,String> propMap) {
-        this(parmURI, enc, null, null);
+        this(parmURI, enc, propMap, null);
     } // Constructor(3)
 
     /** Construct from a URI and specifiy character set encoding
