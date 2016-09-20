@@ -81,7 +81,7 @@ public class URIMultiPart {
         Logger log = Logger.getLogger(URIMultiPart.class.getName());
 
         HttpURLConnection httpCon = null;
-        OutputStream  output     = null;
+        OutputStream   output     = null;
         String url = "";
         String fileName = "../gramword/test/quixote0.html";
         int iarg = 0;

@@ -1,4 +1,5 @@
 /*  Messages.java - Static help texts and other language specific messages for Common.
+ *  Caution: must be UTF-8 - äöüÄÖÜß
  *  @(#) $Id: 57d01d0860aef0c2f2783647be70c3c381710c86 $
  *  2016-09-03, Dr. Georg Fischer: copied from Ramath
  */

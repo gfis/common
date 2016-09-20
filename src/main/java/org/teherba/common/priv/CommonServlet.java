@@ -99,7 +99,7 @@ public class CommonServlet extends HttpServlet {
                     || view.equals("manifest")
                     || view.equals("notice")
                     ) {
-                (new MetaInfPage    ()).showMetaInf (request, response, basePage, language, view, this);
+                (new MetaInfPage  ()).showMetaInf (request, response, basePage, language, view, this);
 
             } else {
                 (new IndexPage    ()).dialog(request, response, basePage, language);

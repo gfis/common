@@ -10,7 +10,7 @@
 <title>Common Main Page</title>
 </head>
 <body>
-<h2>Common</h2>
+<h3>Common Version Vn.vvvv/yyyy-mm-dd<h3>
 <p>This project collects a series of classes and methods which are useful in several subprojects.</p>
 <h3>Parameter Test</h3>
 <form action="servlet" method="POST" enctype="multipart/form-data">
@@ -36,12 +36,19 @@
  \d{4}\-\d{2}\-\d{2} \d{2}\:\d{2}\:\d{2}
  yyyy-mm-dd hh:mm:ss
 #------------------
+Common Version V\d+\.\d+\/\d{4}\-\d{2}\-\d{2}
+Common Version Vn.vvvv/yyyy-mm-dd
+#------------------
+\$Id\: [0-9a-h]+ \$
+$Id: githash $
+#------------------
 
 </pre>
 <a title="wiki"        href="http://www.teherba.org/index.php/Common" target="_new">Wiki</a> Documentation<br />
 <a title="github"      href="https://github.com/gfis/ramath" target="_new">Git Repository</a><br />
 <a title="api"         href="docs/api/index.html">Java API</a> Documentation<br />
 <a title="manifest"    href="servlet?view=manifest">Manifest</a>, <a title="license"     href="servlet?view=license">License</a>, <a title="notice"      href="servlet?view=notice">References</a><br />
+<!-- language="en", features="quest" -->
 <p><span style="font-size:small">
 Questions, remarks: email to  <a href="mailto:punctum@punctum.com?&subject=Common">Dr. Georg Fischer</a></span></p>
 </body></html>

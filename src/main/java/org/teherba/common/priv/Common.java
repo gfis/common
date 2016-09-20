@@ -53,7 +53,7 @@ public class Common implements Serializable {
             args = new String[] { "-h" }; // usage message
         }
         try {
-            System.out.println("Common " + (new MetaInfPage()).getVersionString("common"));
+            System.out.println("Common " + (new MetaInfPage()).getVersionString(commonCommand, "common"));
         } catch (Exception exc) {
             log.error(exc.getMessage(), exc);
         }

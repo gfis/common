@@ -42,8 +42,7 @@ TEST UR0 show known protocols
 CALL URIReader
 
 TEST UR1 http schema
-CALL URIReader "http://localhost:8080/common/index.html"
-
+CALL URIReader "http://localhost:8080/common/noversion.txt"
 # the following works with an Internet connection only
 # gopher is normally disabled in the JVM, maybe -Djdk.net.registerGopherProtocol=true could enable it 
 # TEST UR2 gopher schema
@@ -57,7 +56,7 @@ TEST UR4 file schema
 CALL URIReader "file://$(PWD)/web/index.html"
 
 TEST UR5 jar-file schema
-CALL URIReader "jar:file://$(PWD)/dist/common.jar!/META-INF/LICENSE"
+CALL URIReader "jar:file://$(PWD)/dist/common.jar!/META-INF/LICENSE.txt"
 
 TEST UR6 relative file
 CALL URIReader "web/index.html"
@@ -73,15 +72,3 @@ CALL URIReader "http://localhost:8080/common/servlet UTF-8 view=index parm1=Geor
 TEST W01 get license
 HTTP view=license
 #-------------------------------
-# mulitpart/form-data test program
-PACKAGE=org.teherba.common.priv
-
-TEST MP01 show request body
-CALL URIMultiPart
-DIFF -C0 MP01.this.tst ../gramword/test/sample.multipart.request.txt
-
-TEST MP02 specific multipart/form-data request
-CALL URIMultiPart ../gramword/test/wachstube.txt http://localhost:8080/gramword/servlet
-
-TEST MP03 general  multipart/form-data request
-CALL URIMultiPart ../gramword/test/wachstube.txt "http://localhost:8080/common/servlet?view=index"

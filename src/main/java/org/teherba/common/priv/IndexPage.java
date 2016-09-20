@@ -19,6 +19,7 @@
  */
 package org.teherba.common.priv;
 import  org.teherba.common.web.BasePage;
+import  org.teherba.common.web.MetaInfPage;
 import  java.io.File;
 import  java.io.PrintWriter;
 import  java.io.Serializable;
@@ -60,7 +61,7 @@ public class IndexPage implements Serializable {
             out.write("<title>" + basePage.getAppName() + " Main Page</title>\n");
             out.write("</head>\n<body>\n");
 
-            out.write("<h2>Common</h2>\n");
+            out.write("<h3>Common Version " + (new MetaInfPage()).getVersionString(this, "common") + "<h3>\n");
             out.write("<p>This project collects a series of classes and "
                     + "methods which are useful in several subprojects.</p>\n");
             out.write("<h3>Parameter Test</h3>\n");
