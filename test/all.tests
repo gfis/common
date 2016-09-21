@@ -65,7 +65,7 @@ TEST UR7 data URI
 CALL URIReader "data:this+is%20the+text+to+be+read" UTF-8
 
 TEST UR8 servlet with normal form fields
-CALL URIReader "http://localhost:8080/common/servlet UTF-8 view=index parm1=Georg parm2=2906 -F file1=@test/regression.properties;type=text/plain
+CALL URIReader $(URL) UTF-8 view=index parm1=Georg parm2=2906 -F file1=@test/regression.properties;type=text/plain
 
 #-------------------------------
 # Web interface
