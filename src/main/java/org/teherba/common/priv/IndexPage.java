@@ -1,5 +1,6 @@
 /*  IndexPage.java - main web page for Common
  *  @(#) $Id: 57d01d0860aef0c2f2783647be70c3c381710c86 $
+ *  2016-10-11: IOException
  *  2016-09-03: Dr. Georg Fischer: copied from Ramath
  */
 /*
@@ -21,6 +22,7 @@ package org.teherba.common.priv;
 import  org.teherba.common.web.BasePage;
 import  org.teherba.common.web.MetaInfPage;
 import  java.io.File;
+import  java.io.IOException;
 import  java.io.PrintWriter;
 import  java.io.Serializable;
 import  java.util.Iterator;
@@ -55,8 +57,8 @@ public class IndexPage implements Serializable {
     public void dialog(HttpServletRequest request, HttpServletResponse response
             , BasePage basePage
             , String language
-            ) {
-        try {
+            ) throws IOException {
+        if (true) { // try {
             PrintWriter out = basePage.writeHeader(request, response, language);
             out.write("<title>" + basePage.getAppName() + " Main Page</title>\n");
             out.write("</head>\n<body>\n");
@@ -75,10 +77,14 @@ public class IndexPage implements Serializable {
             Iterator<String> fiter = basePage.getFormIterator();
             while (fiter.hasNext()) {
                 key   = fiter.next();
+                String value = basePage.getFormField(key);
                 out.write("[field" + String.valueOf(ifld) + "] " + key
                         + ":  <input name=\"" + key + "\" type=\"text\" size=\"16\" value=\""
-                        + basePage.getFormField(key) + "\" /><br />\n");
+                        + value + "\" /><br />\n");
                 ifld ++;
+                if (value.equals("null")) {
+                	throw new IOException("artificial null pointer exception");
+                }
             } // while fiter
 
             // then the uploaded files
@@ -115,8 +121,10 @@ public class IndexPage implements Serializable {
 
             basePage.writeAuxiliaryLinks(language, "main");
             basePage.writeTrailer(language, "quest");
+    /*
         } catch (Exception exc) {
             log.error(exc.getMessage(), exc);
+    */
         }
     } // dialog
 

@@ -71,4 +71,10 @@ CALL URIReader $(URL) UTF-8 view=index parm1=Georg parm2=2906 -F file1=@test/reg
 # Web interface
 TEST W01 get license
 HTTP view=license
+
+TEST W02 normal start page
+HTTP view=index
+
+TEST W03 error on start page
+HTTP view=index param1=null
 #-------------------------------

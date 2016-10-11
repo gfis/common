@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
     @(#) $Id: 8ed14768ce231f5de10ed36d28d7ef63e59be418 $
+    2016-10-10: Servlet 3.0 + ErrorServlet
     2016-09-03: common.priv.CommonServlet
     2016-05-30, Georg Fischer: copied from Dbat
 -->
-<web-app version="2.5" 
-        xmlns="http://java.sun.com/xml/ns/javaee" 
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+        version="3.0">
 <!--
  * Copyright 2016 Dr. Georg Fischer <punctum at punctum dot kom>
  *
@@ -44,6 +45,20 @@
         <url-pattern>/servlet</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+        <servlet-name>ErrorServlet</servlet-name>
+        <servlet-class>org.teherba.common.web.ErrorServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ErrorServlet</servlet-name>
+        <url-pattern>/ErrorServlet</url-pattern>
+    </servlet-mapping>
+
+    <error-page>
+        <location>/ErrorServlet</location>
+    </error-page>
+
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
         <welcome-file>index.htm</welcome-file>

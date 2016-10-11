@@ -1,6 +1,7 @@
 /*  Messages.java - Static help texts and other language specific messages for Common.
  *  Caution: must be UTF-8 - äöüÄÖÜß
  *  @(#) $Id: 57d01d0860aef0c2f2783647be70c3c381710c86 $
+ *  2016-10-01: link to common
  *  2016-09-03, Dr. Georg Fischer: copied from Ramath
  */
 /*
@@ -64,7 +65,7 @@ public class Messages implements Serializable {
         basePage.add("en", smess, "{parm}Wiki</a> Documentation");
         basePage.add("de", smess, "{parm}Wiki</a>-Dokumentation");
         smess = String.format("%03d", imess ++);
-        basePage.add(laux, smess, "<a title=\"github\"      href=\"https://github.com/gfis/ramath\" target=\"_new\">");
+        basePage.add(laux, smess, "<a title=\"github\"      href=\"https://github.com/gfis/common\" target=\"_new\">");
         basePage.add("en", smess, "{parm}Git Repository</a>");
         basePage.add("de", smess, "{parm}Git Repository</a>");
         smess = String.format("%03d", imess ++);

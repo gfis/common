@@ -83,7 +83,7 @@ public class CommonServlet extends HttpServlet {
      *  @param request request with header fields
      *  @param response response with writer
      */
-    public void generateResponse(HttpServletRequest request, HttpServletResponse response) {
+    public void generateResponse(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String view = basePage.getFilesAndFields(request, new String[] 
                 { "view",   "index"
                 , "param1", "value1"
@@ -105,8 +105,9 @@ public class CommonServlet extends HttpServlet {
                 (new IndexPage    ()).dialog(request, response, basePage, language);
             //  basePage.writeMessage(request, response, language, new String[] { "401", "view", view });
             }
-        } catch (Exception exc) {
+        } catch (IOException exc) {
             log.error(exc.getMessage(), exc);
+            throw exc;
         }
     } // generateResponse
 
