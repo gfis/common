@@ -5,10 +5,6 @@
     2016-09-03: common.priv.CommonServlet
     2016-05-30, Georg Fischer: copied from Dbat
 -->
-<web-app xmlns="http://java.sun.com/xml/ns/javaee"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-        version="3.0">
 <!--
  * Copyright 2016 Dr. Georg Fischer <punctum at punctum dot kom>
  *
@@ -24,6 +20,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 -->
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+        version="3.0">
     <display-name>Common</display-name>
     <description>
         Classes common to several subprojects
@@ -49,12 +49,10 @@
         <servlet-name>ErrorServlet</servlet-name>
         <servlet-class>org.teherba.common.web.ErrorServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>ErrorServlet</servlet-name>
         <url-pattern>/ErrorServlet</url-pattern>
     </servlet-mapping>
-
     <error-page>
         <location>/ErrorServlet</location>
     </error-page>
