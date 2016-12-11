@@ -7,12 +7,11 @@
 <meta http-equiv="Content-Type" content="application/xhtml+xml;charset=UTF-8" />
 <meta name="robots" content="noindex, nofollow" />
 <link rel="stylesheet" title="common" type="text/css" href="stylesheet.css" />
-<title>Common MetaInf</title>
+<title>Common license</title>
 </head>
 <body>
 <!-- language="en", view="license" -->
-<a name="license" />
-<h3>License</h3>
+<h3><a title="license"     href="servlet?view=license&lang=en">License</a></h3>
 <!-- appName="Common", resource="LICENSE.txt" -->
 <pre>
                                  Apache License
@@ -219,7 +218,7 @@
 </pre>
 <!-- language="en", features="back,quest" -->
 <p>
-Back to the <a href="servlet?view=index">Common</a> main page</p>
+Back to the <a title="main" href="servlet?view=index&lang=en">Common</a> main page</p>
 <p><span style="font-size:small">
 Questions, remarks: email to  <a href="mailto:punctum@punctum.com?&subject=Common">Dr. Georg Fischer</a></span></p>
 </body></html>

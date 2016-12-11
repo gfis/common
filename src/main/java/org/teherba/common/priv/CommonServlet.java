@@ -89,7 +89,7 @@ public class CommonServlet extends HttpServlet {
                 , "param1", "value1"
                 , "param2", "value2"
                 } );
-        String language = "en";
+        String language     = basePage.getInputField(request, "lang"     , "en"      );
         try {
             if (false) {
             } else if (view.equals("index")) {
@@ -98,6 +98,7 @@ public class CommonServlet extends HttpServlet {
             } else if (view.equals("license")
                     || view.equals("manifest")
                     || view.equals("notice")
+                    || view.equals("package")
                     ) {
                 (new MetaInfPage  ()).showMetaInf (request, response, basePage, language, view, this);
 

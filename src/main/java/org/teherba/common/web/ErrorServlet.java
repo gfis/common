@@ -1,4 +1,4 @@
-/*  ErrorServlet.java - handle severe (500) and other Http errors
+/*  ErrorServlet.java - handle severe (500) and other Http errors äöüÄÖÜß
  *  @(#) $Id: RaMathServlet.java 199 2009-07-13 20:16:23Z gfis $
  *  2016-10-09, Georg Fischer: borrowed from
  *  http://www.jvmhost.com/articles/custom-error-pages-handlers-tomcat-cpanel
@@ -73,7 +73,7 @@ public class ErrorServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
-	    PrintWriter out = response.getWriter();
+        PrintWriter out = response.getWriter();
         out.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
         out.write("\n<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n");
         out.write("    \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
@@ -87,17 +87,8 @@ public class ErrorServlet extends HttpServlet {
 
         if (errorCode != 500) { // not Exception
             out.write("<h3>Server Error " + errorCode + "</h3>");
-        /*
-            out.write("Status Code: "   + errorCode                        	+ "<br />");
-            out.write("Request URI: "   + requestUri);
-        */
         } else {
             out.write("<h3>Exception in " + servletName + "</h3>");
-        /*
-            out.write("Exception: "    	+ throwable.getClass().getName()    + "<br />");
-            out.write("Request URI: "  	+ requestUri                    	+ "<br />");
-            out.write("Message: " 		+ throwable.getMessage()			+ "<br />");
-        */
             out.println("<pre>");
             StringWriter stringWriter = new StringWriter();
             PrintWriter  printWriter  = new PrintWriter(stringWriter);
@@ -107,13 +98,12 @@ public class ErrorServlet extends HttpServlet {
             stringWriter.close();
             int restPos = buffer.indexOf("at javax.servlet.http.HttpServlet.service");
             if (restPos >= 0) {
-            	buffer = buffer.substring(0, restPos) + "...";
+                buffer = buffer.substring(0, restPos) + "...";
             }
             out.println(buffer);
             out.println("</pre>");
         } // exception
         out.println("</body></html>");
-
     } // generateResponse
 
 } // ErrorServlet

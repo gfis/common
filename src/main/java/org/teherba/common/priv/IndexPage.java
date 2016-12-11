@@ -119,7 +119,7 @@ public class IndexPage implements Serializable {
                 ifile ++;
             } // while ifile
 
-            basePage.writeAuxiliaryLinks(language, "main");
+            out.write(basePage.getOtherAuxiliaryLinks(language, "main"));
             basePage.writeTrailer(language, "quest");
     /*
         } catch (Exception exc) {
