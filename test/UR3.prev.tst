@@ -1,7 +1,7 @@
 This is ftp.gnu.org, the FTP server of the the GNU project.
 
 Comments, suggestions, problems and complaints should be reported via
-email to <gnu@gnu.org>.
+email to 'gnu@gnu.org'.
 
 gnu/		Contains GNU programs and documents that we develop for the GNU
 		system (or pointers on where to get the programs, if we don't

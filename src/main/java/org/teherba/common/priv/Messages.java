@@ -1,6 +1,7 @@
 /*  Messages.java - Static help texts and other language specific messages for Common.
  *  Caution: must be UTF-8 - äöüÄÖÜß
  *  @(#) $Id: 57d01d0860aef0c2f2783647be70c3c381710c86 $
+ *  2017-05-27: javadoc
  *  2016-10-01: link to common
  *  2016-09-03, Dr. Georg Fischer: copied from Ramath
  */
@@ -32,7 +33,7 @@ import  java.io.Serializable;
  *  <li>de - German</li>
  *  <li>fr - Français</li>
  *  </ul>
- *  <p />
+ *  <p>
  *  All methods in this class are not stateful, and therefore are
  *  <em>static</em> for easier activation.
  *  @author Dr. Georg Fischer

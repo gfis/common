@@ -1,5 +1,6 @@
 /*  Test program for a multipart/form-data POST request
     @(#) $Id$
+ *  2017-05-27: javadoc
     2016-10-13: less imports
     2016-09-14: Dr. Georg Fischer: copied from URIReader
 */
@@ -19,6 +20,8 @@
  * limitations under the License.
  */
 package org.teherba.common.priv;
+import  org.teherba.common.RegressionTester;
+import  org.teherba.common.URIReader;
 import  java.io.BufferedReader;
 import  java.io.File;
 import  java.io.InputStreamReader;

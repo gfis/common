@@ -1,5 +1,6 @@
 /*  CommonServlet.java - Rational and Symbolic Mathematics
  *  @(#) $Id: CommonServlet.java 199 2009-07-13 20:16:23Z gfis $
+ *  2017-05-27: javadoc
  *  2016-09-03, Georg Fischer: copied from RaMathServlet
  */
 /*
@@ -50,7 +51,7 @@ public class CommonServlet extends HttpServlet {
     /** Called by the servlet container to indicate to a servlet
      *  that the servlet is being placed into service.
      *  @param config object containing the servlet's configuration and initialization parameters
-     *  @throws ServletException
+     *  @throws ServletException if a Servlet error occurs
      */
     public void init(ServletConfig config) throws ServletException {
         super.init(config); // ???
@@ -62,7 +63,7 @@ public class CommonServlet extends HttpServlet {
     /** Processes an http GET request
      *  @param request request with header fields
      *  @param response response with writer
-     *  @throws IOException
+     *  @throws IOException if an IO error occurs
      */
     public void doGet (HttpServletRequest request, HttpServletResponse response) throws IOException {
         // log.debug("doGet");
@@ -72,7 +73,7 @@ public class CommonServlet extends HttpServlet {
     /** Processes an http POST request
      *  @param request request with header fields
      *  @param response response with writer
-     *  @throws IOException
+     *  @throws IOException if an IO error occurs
      */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // log.debug("doPost");
@@ -82,6 +83,7 @@ public class CommonServlet extends HttpServlet {
     /** Generates the response (HTML page) for an http request
      *  @param request request with header fields
      *  @param response response with writer
+     *  @throws IOException if an IO error occurs
      */
     public void generateResponse(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String view = basePage.getFilesAndFields(request, new String[] 

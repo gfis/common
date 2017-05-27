@@ -1,5 +1,6 @@
 /*  IndexPage.java - main web page for Common
  *  @(#) $Id: 57d01d0860aef0c2f2783647be70c3c381710c86 $
+ *  2017-05-27: javadoc
  *  2016-10-11: IOException
  *  2016-09-03: Dr. Georg Fischer: copied from Ramath
  */
@@ -53,6 +54,7 @@ public class IndexPage implements Serializable {
      *  @param response response with writer
      *  @param basePage refrence to common methods and error messages
      *  @param language 2-letter code en, de etc.
+     *  @throws IOException if an IO error occurs
      */
     public void dialog(HttpServletRequest request, HttpServletResponse response
             , BasePage basePage
