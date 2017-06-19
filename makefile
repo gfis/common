@@ -55,3 +55,12 @@ multi0:
 multi1:
 	java -cp dist/common.jar org.teherba.common.priv.URIMultiPart ../gramword/test/wachstube.txt \
 			http://localhost:8080/gramword/servlet
+#---------------------------------------------------
+new: new1 new2
+new1:
+	rm -rf dummy
+	ant deploy
+new2:
+	java -Duser.language=en -cp dist/common.jar org.teherba.common.StaticMirror  "http://localhost:8080/dbat/servlet?spec=migr/index" dummy
+	find dummy -type f | wc -l
+	
