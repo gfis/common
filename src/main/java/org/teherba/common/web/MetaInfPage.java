@@ -173,7 +173,7 @@ public class MetaInfPage {
                     result = url;
                 } else { // ignore appl-core.jar
                 }
-                // log.info("urlst=" + urlst + " ? \"" + appName + "\" = " + String.valueOf(! busy));
+                // System.err.println("urlst=" + urlst + " ? \"" + appName + "\" = " + String.valueOf(! busy));
             } // while resEnum
      /*
         } catch (Exception exc) {
