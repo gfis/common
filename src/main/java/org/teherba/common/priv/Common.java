@@ -20,7 +20,8 @@
 package org.teherba.common.priv;
 import  org.teherba.common.web.MetaInfPage;
 import  java.io.Serializable;
-import  org.apache.log4j.Logger;
+import  org.apache.logging.log4j.Logger;
+import  org.apache.logging.log4j.LogManager;
 
 /** Commandline interface for common.
  *  @author Dr. Georg Fischer
@@ -35,7 +36,7 @@ public class Common implements Serializable {
     /** No-args Constructor
      */
     public Common() {
-        log = Logger.getLogger(Common.class.getName());
+        log = LogManager.getLogger(Common.class.getName());
     } // Constructor
     
     //======================
@@ -47,7 +48,7 @@ public class Common implements Serializable {
      *  @param args command line arguments: options, strings, table- or filenames
      */
     public static void main(String[] args) {
-        Logger log = Logger.getLogger(Common.class.getName());
+        Logger log = LogManager.getLogger(Common.class.getName());
         Common commonCommand = new Common();
         if (args.length == 0) {
             args = new String[] { "-h" }; // usage message

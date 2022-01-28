@@ -2,6 +2,7 @@
 
 # Test Common functions and other utility targets
 # @(#) $Id: 2bbd9511422674a354fe5a19f2d55437adbebce0 $
+# 2022-01-28: log4j V1.x -> V2.17 migration targets
 # 2016-08-29: Georg Fischer: copied from Dbat
 
 DIFF=diff -y --suppress-common-lines --width=160
@@ -43,6 +44,24 @@ check_tests:
 	grep -E "^TEST" $(TESTDIR)/all.tests | cut -b 6-8 | sort | uniq -c > $(TESTDIR)/tests_formal.tmp
 	ls -1 $(TESTDIR)/*.prev.tst          | cut -b 6-8 | sort | uniq -c > $(TESTDIR)/tests_actual.tmp
 	diff -y --suppress-common-lines --width=32 $(TESTDIR)/tests_formal.tmp $(TESTDIR)/tests_actual.tmp
+#----------------
+# Targets for the log4j 1.x -> log4j 2.17 migration in an application directory $(DIR)
+log4j: list4 rename4 config4 lib4 dist4 # DIR=
+list4: # DIR= ; show the Java source files that are affected
+	find ../$(DIR)/src/main/java -iname "*.java" | xargs -l grep -il "Logger" \
+	| tee $@.$(DIR).tmp
+rename4: # DIR= ; modify the affected java source files
+	cat list4.$(DIR).tmp | xargs -l perl etc/rename.pl
+config4: # DIR= ; copies the XML configuration and build-import.xml
+	cp -v etc/log4j2.xml ../$(DIR)/etc
+	cd ../$(DIR)/etc ; git add -v log4j2.xml ; mv -v log4j.properties log4j.properties.old
+	cp -v build-import.xml ../$(DIR)
+lib4: # DIR= ; copies the new libraries
+	mv -v ../$(DIR)/lib/log4j-1.2.17.jar ../$(DIR)/lib/log4j-1.2.17.jar.old || :
+	mkdir ../$(DIR)/lib || :
+	cp -v lib/log4j-*-2.17.1.jar ../$(DIR)/lib || :
+dist4: # DIR= ; compiles the package
+	cd ../$(DIR) ; ant clean deploy
 #---------------------------------------------------
 jfind:
 	find src -iname "*.java" | xargs -l grep -iH "$(JF)"

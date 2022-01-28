@@ -31,7 +31,8 @@ import  java.io.PrintWriter;
 import  java.net.URL;
 import  java.net.HttpURLConnection;
 import  java.nio.file.Files;
-import  org.apache.log4j.Logger;
+import  org.apache.logging.log4j.Logger;
+import  org.apache.logging.log4j.LogManager;
 
 /** This is an experimental test program for multipart/form-dat posting to an URL.
  *  The general method is incorporated in {@link URIReader},
@@ -77,7 +78,7 @@ public class URIMultiPart {
      */
     public static void main(String[] args) {
         System.setProperty("jdk.net.registerGopherProtocol", "true"); // does not work, not soon enough?
-        Logger log = Logger.getLogger(URIMultiPart.class.getName());
+        Logger log = LogManager.getLogger(URIMultiPart.class.getName());
 
         HttpURLConnection httpCon = null;
         OutputStream   output     = null;
