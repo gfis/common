@@ -1,7 +1,8 @@
-#!java -Djdk.net.registerGopherProtocol=true -cp dist/dbat.jar org.teherba.common.RegressionTester
+#!java -cp dist/dbat.jar org.teherba.common.RegressionTester
 
 # Collection of Testcases for Common
-# @(#) $Id: all.tca 955 2012-06-05 07:22:59Z gfis $
+# @(#) $Id$
+# 2022-02-06: SHELL verb, no more Gopher
 # 2016-08-29: adopted to 'common'
 # 2016-05-30, Dr. Georg Fischer
 #-----------------------------------
@@ -43,10 +44,6 @@ CALL URIReader
 
 TEST UR1 http schema
 CALL URIReader "http://localhost:8080/common/noversion.txt"
-# the following works with an Internet connection only
-# gopher is normally disabled in the JVM, maybe -Djdk.net.registerGopherProtocol=true could enable it 
-# TEST UR2 gopher schema
-# CALL URIReader "gopher://gopher.rbfh.de/0/Fun/500miles.txt"
 
 the following works with an Internet connection only
 TEST UR3 ftp schema
@@ -78,3 +75,7 @@ HTTP view=index
 TEST W03 error on start page
 HTTP view=index param1=null
 #-------------------------------
+# SHELL verb
+TEST SH1
+SHELL head -n3 test/all.tests | sort
+#----
