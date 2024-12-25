@@ -1,5 +1,5 @@
 URL http://www.teherba.org/index.html ok
-URL mailto:punctum@punctum.com&subject=Test URIReader ok
+URL mailto:dr.georg.fischer@gmail.com&subject=Test URIReader ok
 URL jar:file:///home/gfis/work/gits/dbat/dist/dbat.jar!/META-INF/LICENSE ok
 URL news://news.netcologne.de/alt.free.newsservers failed
 URL gopher://gopher.rbfh.de/0/Fun/500miles.txt failed

@@ -14,7 +14,7 @@
  *  2011-07-15, Dr. Georg Fischer: copied from SeparatedTable
 */
 /*
- * Copyright 2011 Dr. Georg Fischer <punctum at punctum dot kom>
+ * Copyright 2011 Dr. Georg Fischer <dr dot georg dot fischer at gmail dot kom>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -768,7 +768,7 @@ public class URIReader extends InputStream {
                 new URIReader("http://www.teherba.org");
                 String protocols[] =
                         { "http://www.teherba.org/index.html"
-                        , "mailto:punctum@punctum.com&subject=Test URIReader"
+                        , "mailto:dr.georg.fischer@gmail.com&subject=Test URIReader"
                         , "jar:file:///home/gfis/work/gits/dbat/dist/dbat.jar!/META-INF/LICENSE"
                         , "news://news.netcologne.de/alt.free.newsservers"
                         , "gopher://gopher.rbfh.de/0/Fun/500miles.txt"

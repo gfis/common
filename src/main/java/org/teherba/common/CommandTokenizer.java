@@ -83,7 +83,7 @@ public class CommandTokenizer implements Serializable {
                     case StreamTokenizer.TT_EOL:
                         break;
                     case StreamTokenizer.TT_NUMBER:
-                        result.add(String.valueOf(new Double(tokenizer.nval).longValue()));
+                        result.add(String.valueOf(tokenizer.nval));
                         break;
                     case StreamTokenizer.TT_WORD:
                         result.add(              (tokenizer.sval));

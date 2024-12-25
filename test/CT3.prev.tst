@@ -6,7 +6,7 @@ my.pr1
 -in
 2 double quoted
 -in:int
-29647
+29647.0
 -in
 3 single quoted
 ;

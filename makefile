@@ -2,7 +2,7 @@
 
 # Test Common functions and other utility targets
 # @(#) $Id: 2bbd9511422674a354fe5a19f2d55437adbebce0 $
-# 2024-12-25: nnnn
+# 2024-12-25: nnnn; distribute log4j-{api|core}-2.24.3.jar
 # 2022-01-28: log4j V1.x -> V2.17 migration targets
 # 2016-08-29: Georg Fischer: copied from Dbat
 
@@ -26,8 +26,6 @@ regression:
 			org.teherba.common.RegressionTester $(TESTDIR)/all.tests $(TEST) 2>&1 \
 	| tee $(TESTDIR)/regression.log
 	grep FAILED $(TESTDIR)/regression.log
-
-#	java -Dlog4j.debug 
 #----
 # Recreate all testcases which failed (i.e. remove xxx.prev.tst)
 # Handle with care!
@@ -63,6 +61,11 @@ lib4: # DIR= ; copies the new libraries
 	cp -v lib/log4j-*-2.17.1.jar ../$(DIR)/lib || :
 dist4: # DIR= ; compiles the package
 	cd ../$(DIR) ; ant clean deploy
+pastelib:
+	cat etc/gits.lst | xargs -innnn make pastelib1 DIR=nnnn
+pastelib1:
+	cp -v lib/log*.24.* ../$(DIR)/lib
+	rm -v ../$(DIR)/lib/log*.17.*
 #---------------------------------------------------
 jfind:
 	find src -iname "*.java" | xargs -l grep -iH "$(JF)"
