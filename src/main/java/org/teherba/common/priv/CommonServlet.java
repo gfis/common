@@ -33,7 +33,7 @@ import  org.apache.logging.log4j.Logger;
 import  org.apache.logging.log4j.LogManager;
 
 /** This servlet is only used to test the functionality of 
- *  the classes in packages <tt>org.teherba.common.*</tt>.
+ *  the classes in packages <em>org.teherba.common.*</em>.
  *  @author Dr. Georg Fischer
  */
 public class CommonServlet extends HttpServlet {

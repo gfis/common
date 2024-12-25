@@ -2,6 +2,7 @@
 
 # Test Common functions and other utility targets
 # @(#) $Id: 2bbd9511422674a354fe5a19f2d55437adbebce0 $
+# 2024-12-25: nnnn
 # 2022-01-28: log4j V1.x -> V2.17 migration targets
 # 2016-08-29: Georg Fischer: copied from Dbat
 
@@ -33,9 +34,9 @@ regression:
 # Failing testcases are turned into "passed" and are manifested by this target!
 recreate: recr1 regr2
 recr0:
-	grep -E '> FAILED' $(TESTDIR)/regression*.log | cut -f 3 -d ' ' | xargs -l -ißß echo rm -v test/ßß.prev.tst
+	grep -E '> FAILED' $(TESTDIR)/regression*.log | cut -f 3 -d ' ' | xargs -l -innnn echo rm -v test/nnnn.prev.tst
 recr1:
-	grep -E '> FAILED' $(TESTDIR)/regression*.log | cut -f 3 -d ' ' | xargs -l -ißß rm -v test/ßß.prev.tst
+	grep -E '> FAILED' $(TESTDIR)/regression*.log | cut -f 3 -d ' ' | xargs -l -innnn rm -v test/nnnn.prev.tst
 regr2:
 	make regression TEST=$(TEST) > x.tmp
 #--------------------------------------------------
