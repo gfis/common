@@ -9,7 +9,7 @@
     2016-05-30, Gerog Fischer: copied from Dbat
 -->
 <!--
- * Copyright 2016 Dr. Georg Fischer <punctum at punctum dot kom>
+ * Copyright 2016 Dr. Georg Fischer <dr dot georg dot fischer at gmail dot kom>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@
     </target>
 
     <target name="core.jar">
-        <!-- without libraries, without private files 
+        <!-- without libraries, without private files
         -->
         <jar jarfile="${dist.home}/${ant.project.name}-core.jar"
                 basedir="${build.classes}"
@@ -70,6 +70,7 @@
           <delete file="../flodskim/@{file}" />
           <delete file="../gramword/@{file}" />
           <delete file="../jextra/@{file}" />
+          <delete file="../nextra/@{file}" />
           <delete file="../numword/@{file}" />
           <delete file="../ramath/@{file}" />
           <delete file="../xtool/@{file}" />
@@ -88,6 +89,7 @@
           <copy file="@{source}" toDir="../flodskim/@{target.dir}" />
           <copy file="@{source}" toDir="../gramword/@{target.dir}" />
           <copy file="@{source}" toDir="../jextra/@{target.dir}" />
+          <copy file="@{source}" toDir="../nextra/@{target.dir}" />
           <copy file="@{source}" toDir="../numword/@{target.dir}" />
           <copy file="@{source}" toDir="../ramath/@{target.dir}" />
           <copy file="@{source}" toDir="../xtool/@{target.dir}" />
@@ -105,21 +107,21 @@
         <cp-to-all   source="etc/placeholder.txt"       target.dir="dist" />
         <cp-to-all   source="etc/placeholder.txt"       target.dir="build" />
         <cp-to-all   source="dist/common-core.jar"      target.dir="lib" />
-        <cp-to-all   source="lib/log4j-api-2.17.1.jar"  target.dir="lib" />
-        <cp-to-all   source="lib/log4j-core-2.17.1.jar" target.dir="lib" />
+        <cp-to-all   source="lib/log4j-api-2.24.3.jar"  target.dir="lib" />
+        <cp-to-all   source="lib/log4j-core-2.24.3.jar" target.dir="lib" />
         <delete file="/var/lib/tomcat/openlib/common.jar" />
         <copy file="dist/common-core.jar"      toDir="/var/lib/tomcat/openlib" />
-        <copy file="lib/log4j-api-2.17.1.jar"  toDir="/var/lib/tomcat/openlib" />
-        <copy file="lib/log4j-core-2.17.1.jar" toDir="/var/lib/tomcat/openlib" />
+        <copy file="lib/log4j-api-2.24.3.jar"  toDir="/var/lib/tomcat/openlib" />
+        <copy file="lib/log4j-core-2.24.3.jar" toDir="/var/lib/tomcat/openlib" />
         <copy toDir="../dbat/src/main/java/org/teherba/common/">
             <fileset dir="src/main/java/org/teherba/common">
                 <include name="*.java"/>
-            </fileset>       	
+            </fileset>
         </copy>
         <copy toDir="../dbat/src/main/java/org/teherba/common/web">
             <fileset dir="src/main/java/org/teherba/common/web">
                 <include name="*.java"/>
-            </fileset>       	
+            </fileset>
         </copy>
     </target>
 
@@ -140,7 +142,7 @@
         <java classname="org.teherba.common.RegressionTester" classpathref="compile.classpath" fork="true">
             <jvmarg value="-Djdk.net.registerGopherProtocol=true" />
                 <!-- strange, but gopher is usually disabled because of a security problem -->
-            <arg value="test/common.tests" />
+            <arg value="test/all.tests" />
             <arg value="${test}" />
         </java>
     </target>
