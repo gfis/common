@@ -47,7 +47,7 @@ CALL URIReader "http://localhost:8080/common/noversion.txt"
 
 the following works with an Internet connection only
 TEST UR3 ftp schema
-CALL URIReader "ftp://ftp.gnu.org/README"
+CALL URIReader "ftp://ftp.gnu.org/welcome.msg"
 
 TEST UR4 file schema
 CALL URIReader "file://$(PWD)/web/index.html"

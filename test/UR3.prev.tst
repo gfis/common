@@ -1,48 +1,29 @@
-This is ftp.gnu.org, the FTP server of the the GNU project.
+NOTICE (Updated October 15 2021):
 
-Comments, suggestions, problems and complaints should be reported via
-email to 'gnu@gnu.org'.
+If you maintain scripts used to access ftp.gnu.org over FTP,
+we strongly encourage you to change them to use HTTPS instead.
 
-gnu/		Contains GNU programs and documents that we develop for the GNU
-		system (or pointers on where to get the programs, if we don't
-		keep the files here).  These are programs that fit the
-		definition of GNU software at:
-		http://www.gnu.org/philosophy/categories.html#GNUsoftware
+Eventually we hope to shut down FTP protocol access, but plan
+to give notice here and other places for several months ahead
+of time.
 
-old-gnu/	Older versions of GNU software.
+--
 
-non-gnu/	We distribute some non-GNU programs through our FTP server, or
-		provide pointers to where they are.  We put these
-		programs/pointers in this directory since they are not
-		developed by the GNU project. They are, of course, part of
-		the GNU system. See:
-		http://www.gnu.org/philosophy/categories.html#TheGNUsystem
+If you have any problems with the GNU software or its downloading,
+please refer your questions to <gnu@gnu.org>.
 
-third-party	Contains GNU software that has been modified by third
-		parties.  We don't necessarily know the specifics of
-		what these modifications do or how these modified versions
-		work.  We provide this directory as a service to GNU users
-		who might find these modifications useful.
+There are several mirrors of this archive, a complete list can be
+found on http://www.gnu.org/order/ftp.html.  You might want to use a
+mirror closer to you.
 
-iso		Contains bootable CD images (ISO9660) of a development
-		snapshot of the Debian GNU/Hurd complete operating system.
+Non-GNU programs that were formerly in gnu/ have moved to gnu/non-gnu/.
+Most of them were just pointers in the format program.README.  If you
+are looking for such a file, be sure to check gnu/non-gnu/.
 
-ls-lrR.txt.gz	The output of `ls -lrR' run from this directory. This can
-		be used to see what files are here. This is a gzip'ed version of the file.
+Archives of the GNU mailing lists can be accessed or downloaded
+via the web from http://mail.gnu.org; they are no longer available
+by ftp.
 
-lpf.README	A description of where to find information on the League for
-		Programming Freedom, since this information is not kept here 
-		anymore.
-
-There are also .sig files, which contain detached GPG signatures of the above
-files, automatically signed by the same script that generates them.
-
-You can verify the signatures for gnu project files with the keyring file from:
-  ftp://ftp.gnu.org/gnu/gnu-keyring.gpg
-
-In a directory with the keyring file, the source file to verify and the
-signature file, the command to use is:
-
-  $ gpg --verify --keyring ./gnu-keyring.gpg foo.tar.xz.sig 
-
-
+The FSF provides this archive as a service to GNU users.  Please
+consider donating to the FSF at http://donate.fsf.org/ or becoming an
+Associate Member at http://member.fsf.org/.

@@ -18,10 +18,12 @@ close(IN);
 open (BAK, ">", "$file.bak") || die "cannot write $file.bak";
 print BAK $buffer;
 close(BAK);
-# $buffer =~ s{org\.apache\.logging\.log4j\.Logger\;} {org\.apache\.logging\.log4j\.Logger\;\nimport  org\.apache\.logging\.log4j\.LogManager\;}g;
-$buffer =~ s{org\.apache\.log4j\.Logger\;} {org\.apache\.logging\.log4j\.Logger\;\nimport  org\.apache\.logging\.log4j\.LogManager\;}g;
-$buffer =~ s{Logger\.getLogger *\(}        {LogManager\.getLogger\(}g;
+$buffer =~ s{log\.error\(exc\.getMessage\(\)\,}{log\.error\(config\.message\(exc\)\,}g;
 open (OUT, ">", $file) || die "cannot write $file";
 print OUT $buffer;
 close(OUT);
 print STDERR "modified $file\n";
+__DATA__
+# $buffer =~ s{org\.apache\.logging\.log4j\.Logger\;} {org\.apache\.logging\.log4j\.Logger\;\nimport  org\.apache\.logging\.log4j\.LogManager\;}g;
+$buffer =~ s{org\.apache\.log4j\.Logger\;} {org\.apache\.logging\.log4j\.Logger\;\nimport  org\.apache\.logging\.log4j\.LogManager\;}g;
+$buffer =~ s{Logger\.getLogger *\(}        {LogManager\.getLogger\(}g;
